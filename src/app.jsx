@@ -22,11 +22,15 @@ export function App() {
     if (nameExists) {
       throw new Error(`${newPerson.name} is already added to phonebook`);
     }
-    const personObject = {
-      id: persons.length + 1,
-      ...newPerson,
-    };
-    setPersons((persons) => persons.concat(personObject));
+    fetch("http://localhost:3001/persons", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newPerson),
+    })
+      .then((response) => response.json())
+      .then((createdPerson) =>
+        setPersons((persons) => persons.concat(createdPerson))
+      );
   };
 
   return (
