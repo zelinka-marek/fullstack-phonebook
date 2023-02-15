@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const initialFormData = { name: "" };
+const initialFormData = { name: "", tel: "" };
 
 function PersonForm(props) {
   const { onSubmit } = props;
@@ -17,8 +17,8 @@ function PersonForm(props) {
   };
 
   const handleChange = (event) => {
-    const { name, type } = event.target;
-    setFormData((formData) => ({ ...formData, [name]: event.target.value }));
+    const { name, value } = event.target;
+    setFormData((formData) => ({ ...formData, [name]: value }));
   };
 
   return (
@@ -34,6 +34,17 @@ function PersonForm(props) {
           />
         </label>
       </div>
+      <div>
+        <label>
+          number{" "}
+          <input
+            type="text"
+            name="tel"
+            value={formData.tel}
+            onChange={handleChange}
+          />
+        </label>
+      </div>
       <button type="submit">add</button>
     </form>
   );
@@ -45,7 +56,9 @@ function PersonList(props) {
   return (
     <div>
       {items.map((person) => (
-        <div key={person.id}>{person.name}</div>
+        <div key={person.id}>
+          {person.name} {person.tel}
+        </div>
       ))}
     </div>
   );

@@ -4,8 +4,9 @@ import { App } from "./app";
 import "./styles/index.css";
 
 const persons = [
-  { id: 1, name: "Arto Hellas" },
-  { id: 2, name: "Ada Lovelace" },
+  { id: 1, name: "Arto Hellas", tel: "202-555-0150" },
+  { id: 2, name: "Ada Lovelace", tel: "202-555-0160" },
+  { id: 3, name: "Ryan Florence", tel: "202-555-0196" },
 ];
 
 createRoot(document.getElementById("root")).render(
