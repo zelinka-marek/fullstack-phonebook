@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "json-server --port 3001 --watch db.json"
   },
   "prettier": {},
   "dependencies": {
@@ -17,6 +18,7 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.1.0",
+    "json-server": "^0.17.1",
     "vite": "^4.1.0"
   }
 }
