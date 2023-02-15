@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { NameFilter } from "./components/name-filter";
 import { PersonForm } from "./components/person-form";
 import { PersonList } from "./components/person-list";
+import { createPerson, getPersons } from "./services/person";
 
 export function App() {
   const [persons, setPersons] = useState([]);
@@ -12,9 +13,7 @@ export function App() {
       : persons.filter((person) => new RegExp(filter, "i").test(person.name));
 
   useEffect(() => {
-    fetch("http://localhost:3001/persons")
-      .then((response) => response.json())
-      .then(setPersons);
+    getPersons().then(setPersons);
   }, []);
 
   const addPerson = (newPerson) => {
@@ -22,15 +21,9 @@ export function App() {
     if (nameExists) {
       throw new Error(`${newPerson.name} is already added to phonebook`);
     }
-    fetch("http://localhost:3001/persons", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newPerson),
-    })
-      .then((response) => response.json())
-      .then((createdPerson) =>
-        setPersons((persons) => persons.concat(createdPerson))
-      );
+    createPerson(newPerson).then((createdPerson) =>
+      setPersons((persons) => persons.concat(createdPerson))
+    );
   };
 
   return (
