@@ -9,6 +9,16 @@
       "name": "Ado Lewrance",
       "tel": "202-555-0168",
       "id": 4
+    },
+    {
+      "name": "Marek Zelinka",
+      "tel": "",
+      "id": 5
+    },
+    {
+      "name": "",
+      "tel": "",
+      "id": 6
     }
   ]
 }

@@ -30,6 +30,7 @@ export function PersonForm(props) {
             type="text"
             name="name"
             value={formData.name}
+            required
             onChange={handleChange}
           />
         </label>
