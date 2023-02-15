@@ -3,7 +3,7 @@ import { NameFilter } from "./components/name-filter";
 import { PersonDetails } from "./components/person-details";
 import { PersonForm } from "./components/person-form";
 import { PersonList } from "./components/person-list";
-import { createPerson, getPersons } from "./services/person";
+import { createPerson, deletePerson, getPersons } from "./services/person";
 
 export function App() {
   const [persons, setPersons] = useState([]);
@@ -27,6 +27,12 @@ export function App() {
     );
   };
 
+  const deletePersonById = (id) => {
+    deletePerson(id).then(() => {
+      setPersons((persons) => persons.filter((person) => person.id !== id));
+    });
+  };
+
   return (
     <>
       <h1>PhoneBook</h1>
@@ -39,7 +45,11 @@ export function App() {
       <PersonList
         items={personsToShow}
         renderPerson={(person) => (
-          <PersonDetails person={person} filter={filter} />
+          <PersonDetails
+            person={person}
+            filter={filter}
+            onDelete={deletePersonById}
+          />
         )}
       />
     </>

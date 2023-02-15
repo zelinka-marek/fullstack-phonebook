@@ -13,3 +13,10 @@ export function createPerson(data) {
     body: JSON.stringify(data),
   }).then((response) => response.json());
 }
+
+export function deletePerson(id) {
+  return fetch(`${baseUrl}/${id}`, {
+    method: "delete",
+    headers: headers,
+  }).then((response) => response.json());
+}
