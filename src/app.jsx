@@ -67,6 +67,13 @@ function PersonList(props) {
 export function App(props) {
   const { persons: initialPersons } = props;
   const [persons, setPersons] = useState(initialPersons);
+  const [filter, setFilter] = useState("");
+  const personsToShow =
+    filter === ""
+      ? persons
+      : persons.filter((person) =>
+          person.name.toLowerCase().includes(filter.toLowerCase())
+        );
 
   const addPerson = (newPerson) => {
     const nameExists = persons.find((person) => person.name === newPerson.name);
@@ -83,9 +90,20 @@ export function App(props) {
   return (
     <>
       <h1>PhoneBook</h1>
+      <h2>Add Person</h2>
       <PersonForm onSubmit={addPerson} />
       <h2>Numbers</h2>
-      <PersonList items={persons} />
+      <p>
+        <label>
+          filter by name{" "}
+          <input
+            type="text"
+            value={filter}
+            onChange={(event) => setFilter(event.target.value)}
+          />
+        </label>
+      </p>
+      <PersonList items={personsToShow} />
     </>
   );
 }
