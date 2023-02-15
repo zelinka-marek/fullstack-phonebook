@@ -10,9 +10,7 @@ export function App(props) {
   const personsToShow =
     filter === ""
       ? persons
-      : persons.filter((person) =>
-          person.name.toLowerCase().includes(filter.toLowerCase())
-        );
+      : persons.filter((person) => new RegExp(filter, "i").test(person.name));
 
   const addPerson = (newPerson) => {
     const nameExists = persons.find((person) => person.name === newPerson.name);
@@ -35,7 +33,7 @@ export function App(props) {
       <div style={{ marginBottom: 16 }}>
         <NameFilter filter={filter} onChange={setFilter} />
       </div>
-      <PersonList items={personsToShow} />
+      <PersonList items={personsToShow} filter={filter} />
     </>
   );
 }
