@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NameFilter } from "./components/name-filter";
+import { PersonDetails } from "./components/person-details";
 import { PersonForm } from "./components/person-form";
 import { PersonList } from "./components/person-list";
 import { createPerson, getPersons } from "./services/person";
@@ -35,7 +36,12 @@ export function App() {
       <div style={{ marginBottom: 16 }}>
         <NameFilter filter={filter} onChange={setFilter} />
       </div>
-      <PersonList items={personsToShow} filter={filter} />
+      <PersonList
+        items={personsToShow}
+        renderPerson={(person) => (
+          <PersonDetails person={person} filter={filter} />
+        )}
+      />
     </>
   );
 }
