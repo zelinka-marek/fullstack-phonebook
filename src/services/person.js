@@ -34,3 +34,13 @@ export function deletePerson(id) {
     })
   );
 }
+
+export function updatePerson(id, data) {
+  return toJSON(
+    fetch(`${baseUrl}/${id}`, {
+      method: "put",
+      headers: headers,
+      body: JSON.stringify(data),
+    })
+  );
+}

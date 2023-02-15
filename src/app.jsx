@@ -3,7 +3,12 @@ import { NameFilter } from "./components/name-filter";
 import { PersonDetails } from "./components/person-details";
 import { PersonForm } from "./components/person-form";
 import { PersonList } from "./components/person-list";
-import { createPerson, deletePerson, getPersons } from "./services/person";
+import {
+  createPerson,
+  deletePerson,
+  getPersons,
+  updatePerson,
+} from "./services/person";
 
 export function App() {
   const [persons, setPersons] = useState([]);
@@ -18,13 +23,35 @@ export function App() {
   }, []);
 
   const addPerson = (newPerson) => {
-    const nameExists = persons.find((person) => person.name === newPerson.name);
-    if (nameExists) {
-      throw new Error(`${newPerson.name} is already added to phonebook`);
-    }
-    createPerson(newPerson).then((createdPerson) =>
-      setPersons((persons) => persons.concat(createdPerson))
+    const existingPerson = persons.find(
+      (person) => person.name === newPerson.name
     );
+
+    if (existingPerson) {
+      const missingNumber = !existingPerson.tel && newPerson.tel !== "";
+      if (!missingNumber) {
+        throw new Error(
+          `${existingPerson.name} is already added to phonebook, fill in the number field to update!`
+        );
+      } else if (
+        confirm(
+          `${existingPerson.name} is already added to phonebook, replace the old number with a new one?`
+        )
+      ) {
+        const changedPerson = { ...existingPerson, tel: newPerson.tel };
+        updatePerson(existingPerson.id, changedPerson).then((updatedPerson) => {
+          setPersons((persons) =>
+            persons.map((person) =>
+              person.id === updatedPerson.id ? updatedPerson : person
+            )
+          );
+        });
+      }
+    } else {
+      createPerson(newPerson).then((createdPerson) =>
+        setPersons((persons) => persons.concat(createdPerson))
+      );
+    }
   };
 
   const deletePersonById = (id) => {
