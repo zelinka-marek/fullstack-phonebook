@@ -8,8 +8,12 @@ function PersonForm(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit(formData);
-    setFormData(initialFormData);
+    try {
+      onSubmit(formData);
+      setFormData(initialFormData);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const handleChange = (event) => {
@@ -52,6 +56,10 @@ export function App(props) {
   const [persons, setPersons] = useState(initialPersons);
 
   const addPerson = (newPerson) => {
+    const nameExists = persons.find((person) => person.name === newPerson.name);
+    if (nameExists) {
+      throw new Error(`${newPerson.name} is already added to phonebook`);
+    }
     const personObject = {
       id: persons.length + 1,
       ...newPerson,
