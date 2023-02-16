@@ -21,3 +21,26 @@ a {
 a:hover {
   color: #535bf2;
 }
+
+.alert {
+  color: gray;
+  font-weight: 500;
+  font-size: 14px;
+  background-color: lightgray;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 10px 16px;
+  margin-bottom: 16px;
+}
+
+.alert.success {
+  color: green;
+  background-color: lightgreen;
+  border-color: green;
+}
+
+.alert.error {
+  color: red;
+  background-color: lightcoral;
+  border-color: red;
+}

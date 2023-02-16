@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Alert } from "./components/alert";
 import { NameFilter } from "./components/name-filter";
 import { PersonDetails } from "./components/person-details";
 import { PersonForm } from "./components/person-form";
@@ -11,6 +12,7 @@ import {
 } from "./services/person";
 
 export function App() {
+  const [alert, setAlert] = useState(null);
   const [persons, setPersons] = useState([]);
   const [filter, setFilter] = useState("");
   const personsToShow =
@@ -21,6 +23,11 @@ export function App() {
   useEffect(() => {
     getPersons().then(setPersons);
   }, []);
+
+  const notify = ({ status = "success", message }) => {
+    setAlert({ status, message });
+    setTimeout(() => setAlert(null), 3500);
+  };
 
   const addPerson = (newPerson) => {
     const existingPerson = persons.find(
@@ -48,9 +55,10 @@ export function App() {
         });
       }
     } else {
-      createPerson(newPerson).then((createdPerson) =>
-        setPersons((persons) => persons.concat(createdPerson))
-      );
+      createPerson(newPerson).then((createdPerson) => {
+        setPersons((persons) => persons.concat(createdPerson));
+        notify({ message: `Added ${createdPerson.name}` });
+      });
     }
   };
 
@@ -63,6 +71,7 @@ export function App() {
   return (
     <>
       <h1>PhoneBook</h1>
+      {alert && <Alert status={alert.status} message={alert.message} />}
       <h2>Add Person</h2>
       <PersonForm onSubmit={addPerson} />
       <h2>Numbers</h2>

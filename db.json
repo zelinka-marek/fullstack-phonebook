@@ -14,6 +14,11 @@
       "name": "Marek Zelinka",
       "tel": "202-555-1234",
       "id": 7
+    },
+    {
+      "name": "Michael Jackson",
+      "tel": "220-555-4532",
+      "id": 8
     }
   ]
 }
