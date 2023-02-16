@@ -63,9 +63,19 @@ export function App() {
   };
 
   const deletePersonById = (id) => {
-    deletePerson(id).then(() => {
-      setPersons((persons) => persons.filter((person) => person.id !== id));
-    });
+    deletePerson(id)
+      .then(() => {
+        setPersons((persons) => persons.filter((person) => person.id !== id));
+      })
+      .catch(() => {
+        const deletedPerson = persons.find((person) => person.id === id);
+
+        notify({
+          status: "error",
+          message: `Information of ${deletedPerson.name} has already been removed from server`,
+        });
+        setPersons((persons) => persons.filter((person) => person.id !== id));
+      });
   };
 
   return (
