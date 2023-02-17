@@ -35,7 +35,7 @@ export function App() {
     );
 
     if (existingPerson) {
-      const missingNumber = !existingPerson.tel && newPerson.tel !== "";
+      const missingNumber = !existingPerson.number && newPerson.number !== "";
       if (!missingNumber) {
         throw new Error(
           `${existingPerson.name} is already added to phonebook, fill in the number field to update!`
@@ -45,7 +45,7 @@ export function App() {
           `${existingPerson.name} is already added to phonebook, replace the old number with a new one?`
         )
       ) {
-        const changedPerson = { ...existingPerson, tel: newPerson.tel };
+        const changedPerson = { ...existingPerson, number: newPerson.number };
         updatePerson(existingPerson.id, changedPerson).then((updatedPerson) => {
           setPersons((persons) =>
             persons.map((person) =>

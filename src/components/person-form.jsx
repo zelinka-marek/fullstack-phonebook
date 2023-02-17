@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const initialFormData = { name: "", tel: "" };
+const initialFormData = { name: "", number: "" };
 
 export function PersonForm(props) {
   const { onSubmit } = props;
@@ -29,8 +29,8 @@ export function PersonForm(props) {
           <input
             type="text"
             name="name"
-            value={formData.name}
             required
+            value={formData.name}
             onChange={handleChange}
           />
         </label>
@@ -40,8 +40,9 @@ export function PersonForm(props) {
           number{" "}
           <input
             type="text"
-            name="tel"
-            value={formData.tel}
+            name="number"
+            required
+            value={formData.number}
             onChange={handleChange}
           />
         </label>
