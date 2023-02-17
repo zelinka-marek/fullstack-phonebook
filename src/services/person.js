@@ -13,34 +13,36 @@ function toJSON(response) {
 }
 
 export function getPersons() {
-  return toJSON(fetch(baseUrl));
+  const response = fetch(baseUrl);
+
+  return toJSON(response);
 }
 
 export function createPerson(data) {
-  return toJSON(
-    fetch(baseUrl, {
-      method: "post",
-      headers: headers,
-      body: JSON.stringify(data),
-    })
-  );
+  const response = fetch(baseUrl, {
+    method: "post",
+    headers: headers,
+    body: JSON.stringify(data),
+  });
+
+  return toJSON(response);
 }
 
 export function deletePerson(id) {
-  return toJSON(
-    fetch(`${baseUrl}/${id}`, {
-      method: "delete",
-      headers: headers,
-    })
-  );
+  const response = fetch(`${baseUrl}/${id}`, {
+    method: "delete",
+    headers: headers,
+  });
+
+  return toJSON(response);
 }
 
 export function updatePerson(id, data) {
-  return toJSON(
-    fetch(`${baseUrl}/${id}`, {
-      method: "put",
-      headers: headers,
-      body: JSON.stringify(data),
-    })
-  );
+  const response = fetch(`${baseUrl}/${id}`, {
+    method: "put",
+    headers: headers,
+    body: JSON.stringify(data),
+  });
+
+  return toJSON(response);
 }
