@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3001/persons";
+const baseUrl = "/api/persons";
 const headers = new Headers();
 headers.set("Content-Type", "application/json");
 
