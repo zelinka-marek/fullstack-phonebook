@@ -1,48 +1,19 @@
+import axios from "axios";
+
 const baseUrl = "/api/persons";
-const headers = new Headers();
-headers.set("Content-Type", "application/json");
-
-function toJSON(response) {
-  return response.then((response) => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    return response.json();
-  });
-}
 
 export function getPersons() {
-  const response = fetch(baseUrl);
-
-  return toJSON(response);
+  return axios.get(baseUrl).then((response) => response.data);
 }
 
 export function createPerson(data) {
-  const response = fetch(baseUrl, {
-    method: "post",
-    headers: headers,
-    body: JSON.stringify(data),
-  });
-
-  return toJSON(response);
+  return axios.post(baseUrl, data).then((response) => response.data);
 }
 
-export function deletePerson(id) {
-  const response = fetch(`${baseUrl}/${id}`, {
-    method: "delete",
-    headers: headers,
-  });
-
-  return toJSON(response);
+export function deletePersonById(id) {
+  return axios.delete(`${baseUrl}/${id}`);
 }
 
-export function updatePerson(id, data) {
-  const response = fetch(`${baseUrl}/${id}`, {
-    method: "put",
-    headers: headers,
-    body: JSON.stringify(data),
-  });
-
-  return toJSON(response);
+export function updatePersonById(id, data) {
+  return axios.put(`${baseUrl}/${id}`, data).then((response) => response.data);
 }

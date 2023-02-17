@@ -4,12 +4,7 @@ import { NameFilter } from "./components/name-filter";
 import { PersonDetails } from "./components/person-details";
 import { PersonForm } from "./components/person-form";
 import { PersonList } from "./components/person-list";
-import {
-  createPerson,
-  deletePerson,
-  getPersons,
-  updatePerson,
-} from "./services/person";
+import { createPerson, deletePersonById, getPersons } from "./services/person";
 
 export function App() {
   const [alert, setAlert] = useState(null);
@@ -30,52 +25,44 @@ export function App() {
   };
 
   const addPerson = (newPerson) => {
-    const existingPerson = persons.find(
-      (person) => person.name === newPerson.name
-    );
+    // const existingPerson = persons.find(
+    //   (person) => person.name === newPerson.name
+    // );
 
-    if (existingPerson) {
-      const missingNumber = !existingPerson.number && newPerson.number !== "";
-      if (!missingNumber) {
-        throw new Error(
-          `${existingPerson.name} is already added to phonebook, fill in the number field to update!`
-        );
-      } else if (
-        confirm(
-          `${existingPerson.name} is already added to phonebook, replace the old number with a new one?`
-        )
-      ) {
-        const changedPerson = { ...existingPerson, number: newPerson.number };
-        updatePerson(existingPerson.id, changedPerson).then((updatedPerson) => {
-          setPersons((persons) =>
-            persons.map((person) =>
-              person.id === updatedPerson.id ? updatedPerson : person
-            )
-          );
-        });
-      }
-    } else {
-      createPerson(newPerson).then((createdPerson) => {
-        setPersons((persons) => persons.concat(createdPerson));
-        notify({ message: `Added ${createdPerson.name}` });
-      });
-    }
+    // if (existingPerson) {
+    //   const missingNumber = !existingPerson.number && newPerson.number !== "";
+    //   if (!missingNumber) {
+    //     throw new Error(
+    //       `${existingPerson.name} is already added to phonebook, fill in the number field to update!`
+    //     );
+    //   } else if (
+    //     confirm(
+    //       `${existingPerson.name} is already added to phonebook, replace the old number with a new one?`
+    //     )
+    //   ) {
+    //     const changedPerson = { ...existingPerson, number: newPerson.number };
+    //     updatePersonById(existingPerson.id, changedPerson).then(
+    //       (updatedPerson) => {
+    //         setPersons((persons) =>
+    //           persons.map((person) =>
+    //             person.id === updatedPerson.id ? updatedPerson : person
+    //           )
+    //         );
+    //       }
+    //     );
+    //   }
+    // } else {
+    createPerson(newPerson).then((createdPerson) => {
+      setPersons((persons) => persons.concat(createdPerson));
+      notify({ message: `Added ${createdPerson.name}` });
+    });
+    // }
   };
 
-  const deletePersonById = (id) => {
-    deletePerson(id)
-      .then(() => {
-        setPersons((persons) => persons.filter((person) => person.id !== id));
-      })
-      .catch(() => {
-        const deletedPerson = persons.find((person) => person.id === id);
-
-        notify({
-          status: "error",
-          message: `Information of ${deletedPerson.name} has already been removed from server`,
-        });
-        setPersons((persons) => persons.filter((person) => person.id !== id));
-      });
+  const deletePerson = (id) => {
+    deletePersonById(id).then(() => {
+      setPersons((persons) => persons.filter((person) => person.id !== id));
+    });
   };
 
   return (
@@ -94,7 +81,7 @@ export function App() {
           <PersonDetails
             person={person}
             filter={filter}
-            onDelete={deletePersonById}
+            onDelete={deletePerson}
           />
         )}
       />
